@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "Admin Home";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Message"]</h3>
+
+<a asp-area="" asp-controller="Teams" asp-action="Index">Manage Teams</a>
+<a asp-area="" asp-controller="People" asp-action="Index">Manage People</a>
+<a asp-area="" asp-controller="PersonScores" asp-action="Index">Manage Personal Scores</a>
+<a asp-area="" asp-controller="TeamScores" asp-action="Index">Manage Team Scores</a>
