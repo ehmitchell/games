@@ -5,11 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180220195607_testMigration.cs" />
+    <Compile Remove="Migrations\20180220195607_testMigration.Designer.cs" />
+    <Compile Remove="Migrations\20180221204446_update-database.cs" />
+    <Compile Remove="Migrations\20180221204446_update-database.Designer.cs" />
+    <Compile Remove="Migrations\20180221204601_add auth tables.cs" />
+    <Compile Remove="Migrations\20180221204601_add auth tables.Designer.cs" />
+    <Compile Remove="Migrations\20180221204628_addAuthTables.cs" />
+    <Compile Remove="Migrations\20180221204628_addAuthTables.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Controllers\PeopleController.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.0.1" />
     <PackageReference Include="microsoft.entityframeworkcore" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="npgsql" Version="3.2.6" />
@@ -18,6 +31,10 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>
