@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GAMES.Models
 {
@@ -18,6 +19,8 @@ namespace GAMES.Models
         public DbSet<GAMES.Models.TeamScore> TeamScore { get; set; }
         public DbSet<GAMES.Models.Game> Game { get; set; }
         public DbSet<GAMES.Models.PersonScore> PersonScore { get; set; }
+
+        //public DbSet<GAMES.Models.ApplicationUser> ApplicationUser
         //Replace below with GAMES tables
     //    public DbSet<engineering.Models.Client> Client { get; set; }
     //    public DbSet<engineering.Models.Project> Project { get; set; }
