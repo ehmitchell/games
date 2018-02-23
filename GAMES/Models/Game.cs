@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GAMES.Models
 {
-    public enum gameType {
+    public enum GameType {
         Time,
         Score
     }
 
-    public enum gameScoreOrder {
+    public enum GameScoreOrder {
         Ascending,
         Descending
     }
@@ -19,11 +19,12 @@ namespace GAMES.Models
     public class Game
     {
         [Key] public Guid ID { get; set; }
+        public GamesInstance GamesInstance { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Rules { get; set; }
         public bool IsTeamScore { get; set; }
-        public gameType GameType { get; set; }
-        public gameScoreOrder GameScoreOrder { get; set; }
+        public GameType GameType { get; set; }
+        public GameScoreOrder GameScoreOrder { get; set; }
     }
 }

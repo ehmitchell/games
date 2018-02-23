@@ -10,7 +10,7 @@ using System;
 
 namespace GAMES.Migrations
 {
-    [DbContext(typeof(gamesContext))]
+    [DbContext(typeof(GamesContext))]
     [Migration("20180216142844_FixPeopleFK")]
     partial class FixPeopleFK
     {

@@ -11,7 +11,7 @@ namespace GAMES.Models
         [Key] public Guid ID { get; set; }
         public string Name { get; set; }
         public bool IsActive { get; set; }
-        public bool IsJudge { get; set; }
+        public bool IsTeamParticipant { get; set; }
         public Guid? UserId { get; set; }
         public Team TeamId { get; set; }
     }

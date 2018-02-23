@@ -10,7 +10,7 @@ using System;
 
 namespace GAMES.Migrations
 {
-    [DbContext(typeof(gamesContext))]
+    [DbContext(typeof(GamesContext))]
     [Migration("20180215220918_ForeignKeyFix")]
     partial class ForeignKeyFix
     {

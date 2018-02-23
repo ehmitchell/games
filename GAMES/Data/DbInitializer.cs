@@ -9,7 +9,7 @@ namespace GAMES.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(gamesContext context)
+        public static void Initialize(GamesContext context)
 
         {
             context.Database.Migrate();

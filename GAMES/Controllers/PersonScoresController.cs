@@ -11,9 +11,9 @@ namespace GAMES.Controllers
 {
     public class PersonScoresController : Controller
     {
-        private readonly gamesContext _context;
+        private readonly GamesContext _context;
 
-        public PersonScoresController(gamesContext context)
+        public PersonScoresController(GamesContext context)
         {
             _context = context;
         }

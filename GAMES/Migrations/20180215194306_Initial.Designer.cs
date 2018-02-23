@@ -8,7 +8,7 @@ using System;
 
 namespace GAMES.Migrations
 {
-    [DbContext(typeof(gamesContext))]
+    [DbContext(typeof(GamesContext))]
     [Migration("20180215194306_Initial")]
     partial class Initial
     {
