@@ -8,7 +8,7 @@ using System;
 
 namespace GAMES.Migrations
 {
-    [DbContext(typeof(gamesContext))]
+    [DbContext(typeof(GamesContext))]
     partial class gamesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

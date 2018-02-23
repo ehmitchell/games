@@ -11,8 +11,8 @@ using System;
 namespace GAMES.Migrations
 {
     [DbContext(typeof(GamesContext))]
-    [Migration("20180216142844_FixPeopleFK")]
-    partial class FixPeopleFK
+    [Migration("20180223145922_reviseModelsForTeamsAndGames")]
+    partial class reviseModelsForTeamsAndGames
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,8 @@ namespace GAMES.Migrations
 
                     b.Property<int>("GameType");
 
+                    b.Property<int?>("GamesInstanceId");
+
                     b.Property<bool>("IsTeamScore");
 
                     b.Property<string>("Name");
@@ -40,7 +42,27 @@ namespace GAMES.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("GamesInstanceId");
+
                     b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("GAMES.Models.GamesInstance", b =>
+                {
+                    b.Property<int>("GamesInstanceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int>("PersonTeamSize");
+
+                    b.Property<string>("Tagline");
+
+                    b.HasKey("GamesInstanceId");
+
+                    b.ToTable("GamesInstance");
                 });
 
             modelBuilder.Entity("GAMES.Models.Person", b =>
@@ -50,17 +72,13 @@ namespace GAMES.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<bool>("IsJudge");
+                    b.Property<bool>("IsTeamParticipant");
 
                     b.Property<string>("Name");
-
-                    b.Property<Guid?>("TeamIdID");
 
                     b.Property<Guid?>("UserId");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("TeamIdID");
 
                     b.ToTable("Person");
                 });
@@ -85,14 +103,36 @@ namespace GAMES.Migrations
                     b.ToTable("PersonScore");
                 });
 
+            modelBuilder.Entity("GAMES.Models.PersonTeam", b =>
+                {
+                    b.Property<int>("PersonTeamId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("PersonID");
+
+                    b.Property<Guid?>("TeamID");
+
+                    b.HasKey("PersonTeamId");
+
+                    b.HasIndex("PersonID");
+
+                    b.HasIndex("TeamID");
+
+                    b.ToTable("PersonTeam");
+                });
+
             modelBuilder.Entity("GAMES.Models.Team", b =>
                 {
                     b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("GamesInstanceId");
+
                     b.Property<string>("Name");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("GamesInstanceId");
 
                     b.ToTable("Team");
                 });
@@ -117,11 +157,11 @@ namespace GAMES.Migrations
                     b.ToTable("TeamScore");
                 });
 
-            modelBuilder.Entity("GAMES.Models.Person", b =>
+            modelBuilder.Entity("GAMES.Models.Game", b =>
                 {
-                    b.HasOne("GAMES.Models.Team", "TeamId")
+                    b.HasOne("GAMES.Models.GamesInstance", "GamesInstance")
                         .WithMany()
-                        .HasForeignKey("TeamIdID");
+                        .HasForeignKey("GamesInstanceId");
                 });
 
             modelBuilder.Entity("GAMES.Models.PersonScore", b =>
@@ -133,6 +173,24 @@ namespace GAMES.Migrations
                     b.HasOne("GAMES.Models.Person", "PersonId")
                         .WithMany()
                         .HasForeignKey("PersonIdID");
+                });
+
+            modelBuilder.Entity("GAMES.Models.PersonTeam", b =>
+                {
+                    b.HasOne("GAMES.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID");
+
+                    b.HasOne("GAMES.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID");
+                });
+
+            modelBuilder.Entity("GAMES.Models.Team", b =>
+                {
+                    b.HasOne("GAMES.Models.GamesInstance", "GamesInstance")
+                        .WithMany()
+                        .HasForeignKey("GamesInstanceId");
                 });
 
             modelBuilder.Entity("GAMES.Models.TeamScore", b =>

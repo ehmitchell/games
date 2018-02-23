@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GAMES.Models
 {
-    public class gamesContext : DbContext
+    public class GamesContext : DbContext
     {
-        public gamesContext (DbContextOptions<gamesContext> options)
+        public GamesContext (DbContextOptions<GamesContext> options)
             : base(options)
         {
         }
@@ -19,21 +19,17 @@ namespace GAMES.Models
         public DbSet<GAMES.Models.TeamScore> TeamScore { get; set; }
         public DbSet<GAMES.Models.Game> Game { get; set; }
         public DbSet<GAMES.Models.PersonScore> PersonScore { get; set; }
+<<<<<<< HEAD
 
         //public DbSet<GAMES.Models.ApplicationUser> ApplicationUser
         //Replace below with GAMES tables
     //    public DbSet<engineering.Models.Client> Client { get; set; }
     //    public DbSet<engineering.Models.Project> Project { get; set; }
     //    public DbSet<engineering.Models.Review> Review { get; set; }
+=======
+        public DbSet<GAMES.Models.GamesInstance> GamesInstance { get; set; }
+        public DbSet<GAMES.Models.PersonTeam> PersonTeam { get; set; }
+>>>>>>> corrected models
 
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        modelBuilder.Entity<Client>().ToTable("Client");
-    //        modelBuilder.Entity<Project>().ToTable("Project");
-    //        modelBuilder.Entity<Review>().ToTable("Review");
-
-    //    }
-
-    //    public DbSet<GAMES.Models.Recommendation> Recommendation { get; set; }
     }
 }

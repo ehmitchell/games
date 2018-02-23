@@ -24,7 +24,7 @@ namespace GAMES
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<gamesContext>();
+                    var context = services.GetRequiredService<GamesContext>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
