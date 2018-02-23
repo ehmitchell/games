@@ -26,7 +26,7 @@ namespace GAMES
         {
             services.AddMvc();
 
-            services.AddDbContext<gamesContext>(options =>
+            services.AddDbContext<GamesContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("gamesContext")));
         }
 
