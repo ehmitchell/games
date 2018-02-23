@@ -13,6 +13,5 @@ namespace GAMES.Models
         public bool IsActive { get; set; }
         public bool IsTeamParticipant { get; set; }
         public Guid? UserId { get; set; }
-        public Team TeamId { get; set; }
     }
 }
