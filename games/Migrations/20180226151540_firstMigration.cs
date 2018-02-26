@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GAMES.Migrations
 {
-    public partial class database_refresh : Migration
+    public partial class firstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace GAMES.Migrations
                 {
                     GamesInstanceId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2018, 2, 26, 9, 15, 40, 47, DateTimeKind.Local)),
+                    IsActive = table.Column<bool>(nullable: false, defaultValue: true),
                     PersonTeamSize = table.Column<int>(nullable: false),
                     Tagline = table.Column<string>(nullable: true)
                 },
@@ -67,6 +67,26 @@ namespace GAMES.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    GamesInstanceId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Teams_GamesInstances_GamesInstanceId",
+                        column: x => x.GamesInstanceId,
+                        principalTable: "GamesInstances",
+                        principalColumn: "GamesInstanceId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonScores",
                 columns: table => new
                 {
@@ -94,52 +114,6 @@ namespace GAMES.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TeamScores",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    GameID = table.Column<int>(nullable: true),
-                    Score = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamScores", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_TeamScores_Games_GameID",
-                        column: x => x.GameID,
-                        principalTable: "Games",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Teams",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    GamesInstanceId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Teams_GamesInstances_GamesInstanceId",
-                        column: x => x.GamesInstanceId,
-                        principalTable: "GamesInstances",
-                        principalColumn: "GamesInstanceId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Teams_TeamScores_ID",
-                        column: x => x.ID,
-                        principalTable: "TeamScores",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersonTeams",
                 columns: table => new
                 {
@@ -159,6 +133,33 @@ namespace GAMES.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PersonTeams_Teams_TeamID",
+                        column: x => x.TeamID,
+                        principalTable: "Teams",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamScores",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    GameID = table.Column<int>(nullable: true),
+                    Score = table.Column<int>(nullable: false),
+                    TeamID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamScores", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TeamScores_Games_GameID",
+                        column: x => x.GameID,
+                        principalTable: "Games",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TeamScores_Teams_TeamID",
                         column: x => x.TeamID,
                         principalTable: "Teams",
                         principalColumn: "ID",
@@ -199,6 +200,11 @@ namespace GAMES.Migrations
                 name: "IX_TeamScores_GameID",
                 table: "TeamScores",
                 column: "GameID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamScores_TeamID",
+                table: "TeamScores",
+                column: "TeamID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -210,16 +216,16 @@ namespace GAMES.Migrations
                 name: "PersonTeams");
 
             migrationBuilder.DropTable(
-                name: "Persons");
-
-            migrationBuilder.DropTable(
-                name: "Teams");
-
-            migrationBuilder.DropTable(
                 name: "TeamScores");
 
             migrationBuilder.DropTable(
+                name: "Persons");
+
+            migrationBuilder.DropTable(
                 name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "GamesInstances");

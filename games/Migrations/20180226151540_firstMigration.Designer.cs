@@ -12,8 +12,8 @@ using System;
 namespace GAMES.Migrations
 {
     [DbContext(typeof(GamesContext))]
-    [Migration("20180226145022_defaultDateForGamesInstance")]
-    partial class defaultDateForGamesInstance
+    [Migration("20180226151540_firstMigration")]
+    partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,9 +55,11 @@ namespace GAMES.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2018, 2, 26, 8, 50, 22, 604, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2018, 2, 26, 9, 15, 40, 47, DateTimeKind.Local));
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
                     b.Property<int>("PersonTeamSize");
 
@@ -149,9 +151,13 @@ namespace GAMES.Migrations
 
                     b.Property<int>("Score");
 
+                    b.Property<int?>("TeamID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("GameID");
+
+                    b.HasIndex("TeamID");
 
                     b.ToTable("TeamScores");
                 });
@@ -190,11 +196,6 @@ namespace GAMES.Migrations
                     b.HasOne("GAMES.Models.GamesInstance", "GamesInstance")
                         .WithMany()
                         .HasForeignKey("GamesInstanceId");
-
-                    b.HasOne("GAMES.Models.TeamScore", "TeamScore")
-                        .WithOne("Team")
-                        .HasForeignKey("GAMES.Models.Team", "ID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GAMES.Models.TeamScore", b =>
@@ -202,6 +203,10 @@ namespace GAMES.Migrations
                     b.HasOne("GAMES.Models.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameID");
+
+                    b.HasOne("GAMES.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamID");
                 });
 #pragma warning restore 612, 618
         }

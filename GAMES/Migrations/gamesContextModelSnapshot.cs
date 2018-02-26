@@ -12,11 +12,7 @@ using System;
 namespace GAMES.Migrations
 {
     [DbContext(typeof(GamesContext))]
-<<<<<<< HEAD
     partial class GamesContextModelSnapshot : ModelSnapshot
-=======
-    partial class gamesContextModelSnapshot : ModelSnapshot
->>>>>>> 9f30ccd33f25dd419cf685a2cd55361877831111
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +54,7 @@ namespace GAMES.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2018, 2, 26, 9, 1, 57, 968, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2018, 2, 26, 9, 15, 40, 47, DateTimeKind.Local));
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
