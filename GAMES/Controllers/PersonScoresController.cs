@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using GAMES.Data;
 
 namespace GAMES.Controllers
 {
@@ -21,18 +22,18 @@ namespace GAMES.Controllers
         // GET: PersonScores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PersonScore.ToListAsync());
+            return View(await _context.PersonScores.ToListAsync());
         }
 
         // GET: PersonScores/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personScore = await _context.PersonScore
+            var personScore = await _context.PersonScores
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (personScore == null)
             {
@@ -57,7 +58,6 @@ namespace GAMES.Controllers
         {
             if (ModelState.IsValid)
             {
-                personScore.ID = Guid.NewGuid();
                 _context.Add(personScore);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,14 +66,14 @@ namespace GAMES.Controllers
         }
 
         // GET: PersonScores/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personScore = await _context.PersonScore.SingleOrDefaultAsync(m => m.ID == id);
+            var personScore = await _context.PersonScores.SingleOrDefaultAsync(m => m.ID == id);
             if (personScore == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace GAMES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Score")] PersonScore personScore)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Score")] PersonScore personScore)
         {
             if (id != personScore.ID)
             {
@@ -117,14 +117,14 @@ namespace GAMES.Controllers
         }
 
         // GET: PersonScores/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var personScore = await _context.PersonScore
+            var personScore = await _context.PersonScores
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (personScore == null)
             {
@@ -137,17 +137,17 @@ namespace GAMES.Controllers
         // POST: PersonScores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var personScore = await _context.PersonScore.SingleOrDefaultAsync(m => m.ID == id);
-            _context.PersonScore.Remove(personScore);
+            var personScore = await _context.PersonScores.SingleOrDefaultAsync(m => m.ID == id);
+            _context.PersonScores.Remove(personScore);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonScoreExists(Guid id)
+        private bool PersonScoreExists(int id)
         {
-            return _context.PersonScore.Any(e => e.ID == id);
+            return _context.PersonScores.Any(e => e.ID == id);
         }
     }
 }

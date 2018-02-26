@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using GAMES.Data;
 
 namespace GAMES.Controllers
 {
@@ -21,18 +22,18 @@ namespace GAMES.Controllers
         // GET: TeamScores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TeamScore.ToListAsync());
+            return View(await _context.TeamScores.ToListAsync());
         }
 
         // GET: TeamScores/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teamScore = await _context.TeamScore
+            var teamScore = await _context.TeamScores
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (teamScore == null)
             {
@@ -57,7 +58,6 @@ namespace GAMES.Controllers
         {
             if (ModelState.IsValid)
             {
-                teamScore.ID = Guid.NewGuid();
                 _context.Add(teamScore);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,14 +66,14 @@ namespace GAMES.Controllers
         }
 
         // GET: TeamScores/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teamScore = await _context.TeamScore.SingleOrDefaultAsync(m => m.ID == id);
+            var teamScore = await _context.TeamScores.SingleOrDefaultAsync(m => m.ID == id);
             if (teamScore == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace GAMES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Score")] TeamScore teamScore)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Score")] TeamScore teamScore)
         {
             if (id != teamScore.ID)
             {
@@ -117,14 +117,14 @@ namespace GAMES.Controllers
         }
 
         // GET: TeamScores/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var teamScore = await _context.TeamScore
+            var teamScore = await _context.TeamScores
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (teamScore == null)
             {
@@ -137,17 +137,17 @@ namespace GAMES.Controllers
         // POST: TeamScores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var teamScore = await _context.TeamScore.SingleOrDefaultAsync(m => m.ID == id);
-            _context.TeamScore.Remove(teamScore);
+            var teamScore = await _context.TeamScores.SingleOrDefaultAsync(m => m.ID == id);
+            _context.TeamScores.Remove(teamScore);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeamScoreExists(Guid id)
+        private bool TeamScoreExists(int id)
         {
-            return _context.TeamScore.Any(e => e.ID == id);
+            return _context.TeamScores.Any(e => e.ID == id);
         }
     }
 }

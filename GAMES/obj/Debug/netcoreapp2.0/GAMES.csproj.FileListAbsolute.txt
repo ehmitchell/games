@@ -1,11 +1,11 @@
+C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.csprojResolveAssemblyReference.cache
+C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.csproj.CoreCompileInputs.cache
+C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.AssemblyInfoInputs.cache
+C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.AssemblyInfo.cs
 C:\Users\sean.gannon\Documents\Games\games\GAMES\bin\Debug\netcoreapp2.0\GAMES.deps.json
 C:\Users\sean.gannon\Documents\Games\games\GAMES\bin\Debug\netcoreapp2.0\GAMES.runtimeconfig.json
 C:\Users\sean.gannon\Documents\Games\games\GAMES\bin\Debug\netcoreapp2.0\GAMES.runtimeconfig.dev.json
 C:\Users\sean.gannon\Documents\Games\games\GAMES\bin\Debug\netcoreapp2.0\GAMES.dll
 C:\Users\sean.gannon\Documents\Games\games\GAMES\bin\Debug\netcoreapp2.0\GAMES.pdb
-C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.csprojResolveAssemblyReference.cache
-C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.csproj.CoreCompileInputs.cache
-C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.AssemblyInfoInputs.cache
-C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.AssemblyInfo.cs
 C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.dll
 C:\Users\sean.gannon\Documents\Games\games\GAMES\obj\Debug\netcoreapp2.0\GAMES.pdb

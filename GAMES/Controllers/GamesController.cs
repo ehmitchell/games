@@ -6,34 +6,69 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using GAMES.Data;
+using GAMES.Service;
+using System.Net;
 
 namespace GAMES.Controllers
 {
     public class GamesController : Controller
     {
         private readonly GamesContext _context;
+        private readonly GamesInstanceService _gamesInstanceService;
+        private readonly TeamService _teamService;
 
-        public GamesController(GamesContext context)
+
+        public GamesController(GamesContext context,
+            GamesInstanceService gamesInstanceService,
+            TeamService teamService)
         {
             _context = context;
+            _gamesInstanceService = gamesInstanceService;
+            _teamService = teamService;
         }
+
 
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Game.ToListAsync());
+            return View(await _context.Games.ToListAsync());
+        }
+
+        public IActionResult GamesInstanceIndex()
+        {
+            return View( _gamesInstanceService.GetAllGames());
+        }
+
+        
+        public IActionResult CreateGamesInstance()
+        {
+            return View(new GamesInstance());
+        }
+
+        [HttpPost]
+        public IActionResult CreateGamesInstance(GamesInstance gamesInstance)
+        {
+            _gamesInstanceService.CreateGamesInstance(gamesInstance);
+            return RedirectToAction("GamesInstanceIndex");
+        }
+
+        [HttpPost]
+        public IActionResult GenerateInstanceTeams(int gamesInstanceId)
+        {
+            if (_gamesInstanceService.Get(gamesInstanceId).IsActive)
+            {
+                List<Team> teams = _teamService.GenerateRandomTeams(gamesInstanceId);
+                return new StatusCodeResult((int)HttpStatusCode.OK);
+            }
+            
+            return new StatusCodeResult((int)HttpStatusCode.BadRequest);
         }
 
         // GET: Games/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var game = await _context.Game
-                .SingleOrDefaultAsync(m => m.ID == id);
+            var game =  _context.Games.FindAsync(id);
             if (game == null)
             {
                 return NotFound();
@@ -57,7 +92,6 @@ namespace GAMES.Controllers
         {
             if (ModelState.IsValid)
             {
-                game.ID = Guid.NewGuid();
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,14 +100,14 @@ namespace GAMES.Controllers
         }
 
         // GET: Games/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var game = await _context.Game.SingleOrDefaultAsync(m => m.ID == id);
+            var game = await _context.Games.SingleOrDefaultAsync(m => m.ID == id);
             if (game == null)
             {
                 return NotFound();
@@ -86,7 +120,7 @@ namespace GAMES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Name,Description,Rules,IsTeamScore,GameType,GameScoreOrder")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Rules,IsTeamScore,GameType,GameScoreOrder")] Game game)
         {
             if (id != game.ID)
             {
@@ -117,14 +151,14 @@ namespace GAMES.Controllers
         }
 
         // GET: Games/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var game = await _context.Game
+            var game = await _context.Games
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (game == null)
             {
@@ -137,17 +171,17 @@ namespace GAMES.Controllers
         // POST: Games/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var game = await _context.Game.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Game.Remove(game);
+            var game = await _context.Games.FindAsync(id);
+            _context.Games.Remove(game);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GameExists(Guid id)
+        private bool GameExists(int id)
         {
-            return _context.Game.Any(e => e.ID == id);
+            return _context.Games.Any(e => e.ID == id);
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace GAMES.Models
+namespace GAMES.Data
 {
     public class GamesContext : DbContext
     {
@@ -14,13 +14,23 @@ namespace GAMES.Models
             : base(options)
         {
         }
-        public DbSet<GAMES.Models.Person> Person { get; set; }
-        public DbSet<GAMES.Models.Team> Team { get; set; }
-        public DbSet<GAMES.Models.TeamScore> TeamScore { get; set; }
-        public DbSet<GAMES.Models.Game> Game { get; set; }
-        public DbSet<GAMES.Models.PersonScore> PersonScore { get; set; }
-        public DbSet<GAMES.Models.GamesInstance> GamesInstance { get; set; }
-        public DbSet<GAMES.Models.PersonTeam> PersonTeam { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamScore> TeamScores { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<PersonScore> PersonScores { get; set; }
+        public DbSet<GamesInstance> GamesInstances { get; set; }
+        public DbSet<PersonTeam> PersonTeams { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GamesInstance>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<GamesInstance>()
+                .Property(b => b.IsActive)
+                .HasDefaultValue(true);
+        }
 
     }
 }

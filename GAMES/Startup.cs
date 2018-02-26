@@ -11,6 +11,8 @@ using GAMES.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using GAMES.Data;
+using GAMES.Service;
 
 namespace GAMES
 {
@@ -29,7 +31,7 @@ namespace GAMES
             var keyAsBytes = System.Text.Encoding.UTF8.GetBytes(Configuration["Auth0:ClientSecret"]);
             var issuerSigningKey = new SymmetricSecurityKey(keyAsBytes);
 
-            services.AddDbContext<gamesContext>(options =>
+            services.AddDbContext<GamesContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("gamesContext")));
 
 
@@ -101,6 +103,10 @@ namespace GAMES
                     },
                 };
             });
+
+            services.AddTransient<GamesInstanceService, GamesInstanceService>();
+            services.AddTransient<PersonService, PersonService>();
+            services.AddTransient<TeamService, TeamService>();
 
             services.AddMvc();
 
