@@ -1,0 +1,60 @@
+﻿@model IEnumerable<GAMES.Models.GamesInstance>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    <a asp-action="CreateGamesInstance">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GamesInstanceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tagline)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonTeamSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GamesInstanceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tagline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonTeamSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
+                @if (item.IsActive) {
+                    <span>|</span> <button class="btn generateRandomTeams" instanceId="@item.GamesInstanceId">Generate Random Teams</button>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

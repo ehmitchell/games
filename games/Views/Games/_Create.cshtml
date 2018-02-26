@@ -1,0 +1,43 @@
+﻿@model GAMES.Models.Game
+
+<h4>Game</h4>
+<hr />
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Description" class="control-label"></label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Rules" class="control-label"></label>
+    <input asp-for="Rules" class="form-control" />
+    <span asp-validation-for="Rules" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsTeamScore" /> @Html.DisplayNameFor(model => model.IsTeamScore)
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label asp-for="GameType" class="control-label"></label>
+    @Html.DropDownList("GameType",
+        Html.GetEnumSelectList<GameType>())
+    <span asp-validation-for="GameType" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="GameScoreOrder" class="control-label"></label>
+    @Html.DropDownList("GameScoreOrder",
+            Html.GetEnumSelectList<GameScoreOrder>())
+    <span asp-validation-for="GameScoreOrder" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-default" />
+</div>
+
+
