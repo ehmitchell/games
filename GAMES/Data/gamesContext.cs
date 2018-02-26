@@ -31,6 +31,5 @@ namespace GAMES.Data
                 .Property(b => b.IsActive)
                 .HasDefaultValue(true);
         }
-
     }
 }

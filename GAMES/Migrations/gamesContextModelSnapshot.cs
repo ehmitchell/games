@@ -12,7 +12,11 @@ using System;
 namespace GAMES.Migrations
 {
     [DbContext(typeof(GamesContext))]
+<<<<<<< HEAD
     partial class GamesContextModelSnapshot : ModelSnapshot
+=======
+    partial class gamesContextModelSnapshot : ModelSnapshot
+>>>>>>> 9f30ccd33f25dd419cf685a2cd55361877831111
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
