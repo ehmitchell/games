@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GAMES.Models
 {
-    public class TeamScore
+    public class PersonTeam
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-        public int Score { get; set; }
+        public int PersonTeamId { get; set; }
+        public Person Person { get; set; }
         public Team Team { get; set; }
-        public Game Game { get; set; }
     }
 }

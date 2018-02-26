@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using GAMES.Data;
 
 namespace GAMES.Controllers
 {
     public class TeamsController : Controller
     {
-        private readonly gamesContext _context;
+        private readonly GamesContext _context;
 
-        public TeamsController(gamesContext context)
+        public TeamsController(GamesContext context)
         {
             _context = context;
         }
@@ -21,19 +22,18 @@ namespace GAMES.Controllers
         // GET: Teams
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Team.ToListAsync());
+            return View(await _context.Teams.ToListAsync());
         }
 
         // GET: Teams/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var team = await _context.Team
-                .SingleOrDefaultAsync(m => m.ID == id);
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -57,7 +57,6 @@ namespace GAMES.Controllers
         {
             if (ModelState.IsValid)
             {
-                team.ID = Guid.NewGuid();
                 _context.Add(team);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,14 +65,14 @@ namespace GAMES.Controllers
         }
 
         // GET: Teams/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var team = await _context.Team.SingleOrDefaultAsync(m => m.ID == id);
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
                 return NotFound();
@@ -86,7 +85,7 @@ namespace GAMES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Name")] Team team)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Team team)
         {
             if (id != team.ID)
             {
@@ -117,14 +116,14 @@ namespace GAMES.Controllers
         }
 
         // GET: Teams/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var team = await _context.Team
+            var team = await _context.Teams
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (team == null)
             {
@@ -137,17 +136,17 @@ namespace GAMES.Controllers
         // POST: Teams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Team.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Team.Remove(team);
+            var team = await _context.Teams.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Teams.Remove(team);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TeamExists(Guid id)
+        private bool TeamExists(int id)
         {
-            return _context.Team.Any(e => e.ID == id);
+            return _context.Teams.Any(e => e.ID == id);
         }
     }
 }

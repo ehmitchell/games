@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
+using GAMES.Data;
 
 namespace GAMES.Controllers
 {
     public class PeopleController : Controller
     {
-        private readonly gamesContext _context;
+        private readonly GamesContext _context;
 
-        public PeopleController(gamesContext context)
+        public PeopleController(GamesContext context)
         {
             _context = context;
         }
@@ -21,18 +22,18 @@ namespace GAMES.Controllers
         // GET: People
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Person.ToListAsync());
+            return View(await _context.Persons.ToListAsync());
         }
 
         // GET: People/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var person = await _context.Person
+            var person = await _context.Persons
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (person == null)
             {
@@ -57,7 +58,6 @@ namespace GAMES.Controllers
         {
             if (ModelState.IsValid)
             {
-                person.ID = Guid.NewGuid();
                 _context.Add(person);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,14 +66,14 @@ namespace GAMES.Controllers
         }
 
         // GET: People/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var person = await _context.Person.SingleOrDefaultAsync(m => m.ID == id);
+            var person = await _context.Persons.SingleOrDefaultAsync(m => m.ID == id);
             if (person == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace GAMES.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID,Name,IsActive,IsJudge,UserId")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,IsActive,IsJudge,UserId")] Person person)
         {
             if (id != person.ID)
             {
@@ -117,14 +117,14 @@ namespace GAMES.Controllers
         }
 
         // GET: People/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var person = await _context.Person
+            var person = await _context.Persons
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (person == null)
             {
@@ -137,17 +137,17 @@ namespace GAMES.Controllers
         // POST: People/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var person = await _context.Person.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Person.Remove(person);
+            var person = await _context.Persons.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Persons.Remove(person);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonExists(Guid id)
+        private bool PersonExists(int id)
         {
-            return _context.Person.Any(e => e.ID == id);
+            return _context.Persons.Any(e => e.ID == id);
         }
     }
 }

@@ -1357,7 +1357,7 @@ if (typeof jQuery === 'undefined') {
     var defaults = this.getDefaults()
 
     this._options && $.each(this._options, function (key, value) {
-      if (defaults[key] != value) options[key] = value
+      if (defaults[Key] != value) options[Key] = value
     })
 
     return options
@@ -1394,7 +1394,7 @@ if (typeof jQuery === 'undefined') {
 
   Tooltip.prototype.isInStateTrue = function () {
     for (var key in this.inState) {
-      if (this.inState[key]) return true
+      if (this.inState[Key]) return true
     }
 
     return false

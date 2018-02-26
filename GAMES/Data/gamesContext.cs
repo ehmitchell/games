@@ -6,34 +6,30 @@ using Microsoft.EntityFrameworkCore;
 using GAMES.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace GAMES.Models
+namespace GAMES.Data
 {
-    public class gamesContext : DbContext
+    public class GamesContext : DbContext
     {
-        public gamesContext (DbContextOptions<gamesContext> options)
+        public GamesContext (DbContextOptions<GamesContext> options)
             : base(options)
         {
         }
-        public DbSet<GAMES.Models.Person> Person { get; set; }
-        public DbSet<GAMES.Models.Team> Team { get; set; }
-        public DbSet<GAMES.Models.TeamScore> TeamScore { get; set; }
-        public DbSet<GAMES.Models.Game> Game { get; set; }
-        public DbSet<GAMES.Models.PersonScore> PersonScore { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamScore> TeamScores { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<PersonScore> PersonScores { get; set; }
+        public DbSet<GamesInstance> GamesInstances { get; set; }
+        public DbSet<PersonTeam> PersonTeams { get; set; }
 
-        //public DbSet<GAMES.Models.ApplicationUser> ApplicationUser
-        //Replace below with GAMES tables
-    //    public DbSet<engineering.Models.Client> Client { get; set; }
-    //    public DbSet<engineering.Models.Project> Project { get; set; }
-    //    public DbSet<engineering.Models.Review> Review { get; set; }
-
-    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    {
-    //        modelBuilder.Entity<Client>().ToTable("Client");
-    //        modelBuilder.Entity<Project>().ToTable("Project");
-    //        modelBuilder.Entity<Review>().ToTable("Review");
-
-    //    }
-
-    //    public DbSet<GAMES.Models.Recommendation> Recommendation { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GamesInstance>()
+                .Property(b => b.CreatedDate)
+                .HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<GamesInstance>()
+                .Property(b => b.IsActive)
+                .HasDefaultValue(true);
+        }
     }
 }
